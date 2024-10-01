@@ -1,3 +1,4 @@
 ![alt text](https://i.imgur.com/lUpwyg5.png)
 # SyFo-Threat-Detector
-This is a project that Stephen Foley and Szymon Kawecki made in our Third year Semester One of college. It was for the Module Automating Security practices.
+SE606 3rd Year Cybercrime & IT Security; Automating Security Practices project. 
+Browser extension with phishing link and malicious attachment detector by Szymon Kawecki and Stephen Foley
