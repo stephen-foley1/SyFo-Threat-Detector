@@ -79,20 +79,31 @@ function scanFile(file) {
     const formData = new FormData();
     formData.append('file', file);
 
-    fetch(`https://www.virustotal.com/api/v3/files?apikey=${apiKey}`, {
+    console.log("Scanning file:", file.name);  // Debug log
+
+    fetch(`https://www.virustotal.com/api/v3/files`, {
         method: 'POST',
+        headers: {
+            'x-apikey': apiKey
+        },
         body: formData
     })
         .then(response => response.json())
         .then(data => {
-            console.log("VirusTotal Response:", data);  // Log the response
-            if (data.data.attributes.last_analysis_stats.malicious > 0) {
-                alert("This file contains malware.");
+            console.log("VirusTotal Response:", data);  // Log the entire response for debugging
+            if (data && data.data && data.data.attributes && data.data.attributes.last_analysis_stats) {
+                const analysisStats = data.data.attributes.last_analysis_stats;
+                if (analysisStats.malicious > 0) {
+                    alert("This file contains malware.");
+                } else {
+                    alert("This file seems safe.");
+                }
             } else {
-                alert("This file seems safe.");
+                alert("No analysis results available yet. Try again later.");
             }
         })
         .catch(error => {
             console.error("Error with VirusTotal API:", error);
         });
 }
+
