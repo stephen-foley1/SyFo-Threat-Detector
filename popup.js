@@ -21,20 +21,24 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // Ensure scanBtn is attached properly
+    const scanBtn = document.getElementById('scanBtn');
+    if (scanBtn) {
+        scanBtn.addEventListener('click', function() {
+            const fileInput = document.getElementById('attachment');
+            const file = fileInput.files[0];
+            if (file) {
+                scanFile(file);  // Your scanning function
+            } else {
+                alert("Please select a file first.");
+            }
+        });
+    } else {
+        console.error('Element with id "scanBtn" not found.');
+    }
 });
 
 // Your existing checkURL function (URL phishing detection)
-// Your existing scanFile function (Malware detection for files)
-
-document.addEventListener('DOMContentLoaded', function() {
-    const emailLinks = document.querySelectorAll('a');  // Assuming you have email links in <a> tags
-
-    emailLinks.forEach(link => {
-        checkURL(link.href);  // Function to check each URL
-    });
-});
-
-
 function checkURL(url) {
     const apiKey = 'AIzaSyBulgcKZpxAAw0QE2Y8a4k7dcN_nxpkACM';
     const apiURL = `https://safebrowsing.googleapis.com/v4/threatMatches:find?key=${apiKey}`;
@@ -50,28 +54,26 @@ function checkURL(url) {
 
     fetch(apiURL, {
         method: 'POST',
-        body: JSON.stringify(body)
+        body: JSON.stringify(body),
+        headers: {
+            'Content-Type': 'application/json'
+        }
     })
         .then(response => response.json())
         .then(data => {
+            console.log("API Response:", data);  // Log the API response
             if (data.matches) {
                 alert("Warning! This link may be a phishing site.");
+            } else {
+                alert("This URL seems safe.");
             }
+        })
+        .catch(error => {
+            console.error("Error with Google Safe Browsing API:", error);
         });
 }
-document.addEventListener('DOMContentLoaded', function() {
-    const attachmentButtons = document.querySelectorAll('.attachment-download');  // Assuming download buttons have this class
 
-    attachmentButtons.forEach(button => {
-        button.addEventListener('click', function(event) {
-            const file = event.target.files[0];  // Get the file when user clicks download
-            if (file) {
-                scanFile(file);  // Function to scan the file for malware
-            }
-        });
-    });
-});
-
+// Your existing scanFile function (Malware detection for files)
 function scanFile(file) {
     const apiKey = '6a902f8e8420ce6fac8f7df257593036fb24c4ddc1f51eb3b7c032e0753f7103';
     const formData = new FormData();
@@ -94,15 +96,3 @@ function scanFile(file) {
             console.error("Error with VirusTotal API:", error);
         });
 }
-
-document.getElementById('scanBtn').addEventListener('click', function() {
-    const fileInput = document.getElementById('attachment');
-    const file = fileInput.files[0];
-    if (file) {
-        scanFile(file);  // Your scanning function
-    } else {
-        alert("Please select a file first.");
-    }
-});
-
-
