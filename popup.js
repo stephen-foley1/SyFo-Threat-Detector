@@ -1,3 +1,6 @@
+// Load environment variables
+require('dotenv').config();
+
 document.addEventListener('DOMContentLoaded', function() {
 
     // Event listener for scanning a manually entered URL
@@ -40,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Your existing checkURL function (URL phishing detection)
 function checkURL(url) {
-    const apiKey = 'AIzaSyBulgcKZpxAAw0QE2Y8a4k7dcN_nxpkACM';
+    const apiKey = process.env.GOOGLE_API_KEY;
     const apiURL = `https://safebrowsing.googleapis.com/v4/threatMatches:find?key=${apiKey}`;
     const body = {
         client: { clientId: "syfo", clientVersion: "1.0" },
@@ -75,7 +78,7 @@ function checkURL(url) {
 
 // Your existing scanFile function (Malware detection for files)
 function scanFile(file) {
-    const apiKey = '6a902f8e8420ce6fac8f7df257593036fb24c4ddc1f51eb3b7c032e0753f7103';
+    const apiKey = process.env.VIRUSTOTAL_API_KEY;
     const formData = new FormData();
     formData.append('file', file);
 
@@ -106,4 +109,3 @@ function scanFile(file) {
             console.error("Error with VirusTotal API:", error);
         });
 }
-
