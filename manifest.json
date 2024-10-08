@@ -1,7 +1,7 @@
 {
   "name": "SyFo Threat Detector",
   "description": "Phishing Link and Malicious Attachment Detector Extension",
-  "version": "1.6s",
+  "version": "1.6",
   "manifest_version": 3,
   "action": {
     "default_popup": "hello.html",
