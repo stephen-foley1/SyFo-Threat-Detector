@@ -4,7 +4,7 @@
   "version": "1.0",
   "description": "Your extension description.",
   "browser_action": {
-    "default_popup": "dist/popup.html"
+    "default_popup": "hello.html"
   },
   "background": {
     "scripts": ["dist/popup.js"]

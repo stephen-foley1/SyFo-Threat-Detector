@@ -1,37 +1,30 @@
-// Load environment variables
-require('dotenv').config();
-
 document.addEventListener('DOMContentLoaded', function() {
-
-    // Event listener for scanning a manually entered URL
     document.getElementById('scanUrlBtn').addEventListener('click', function() {
         const url = document.getElementById('urlInput').value;
         if (url) {
-            checkURL(url);  // Your existing URL scanning function
+            checkURL(url);
         } else {
             alert("Please enter a valid URL.");
         }
     });
 
-    // Event listener for scanning a manually uploaded file
     document.getElementById('scanFileBtn').addEventListener('click', function() {
         const fileInput = document.getElementById('fileInput');
         const file = fileInput.files[0];
         if (file) {
-            scanFile(file);  // Your existing file scanning function
+            scanFile(file);
         } else {
             alert("Please select a file first.");
         }
     });
 
-    // Ensure scanBtn is attached properly
     const scanBtn = document.getElementById('scanBtn');
     if (scanBtn) {
         scanBtn.addEventListener('click', function() {
             const fileInput = document.getElementById('attachment');
             const file = fileInput.files[0];
             if (file) {
-                scanFile(file);  // Your scanning function
+                scanFile(file);
             } else {
                 alert("Please select a file first.");
             }
@@ -41,7 +34,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Your existing checkURL function (URL phishing detection)
 function checkURL(url) {
     const apiKey = process.env.GOOGLE_API_KEY;
     const apiURL = `https://safebrowsing.googleapis.com/v4/threatMatches:find?key=${apiKey}`;
@@ -64,7 +56,7 @@ function checkURL(url) {
     })
         .then(response => response.json())
         .then(data => {
-            console.log("API Response:", data);  // Log the API response
+            console.log("API Response:", data);
             if (data.matches) {
                 alert("Warning! This link may be a phishing site.");
             } else {
@@ -76,13 +68,12 @@ function checkURL(url) {
         });
 }
 
-// Your existing scanFile function (Malware detection for files)
 function scanFile(file) {
     const apiKey = process.env.VIRUSTOTAL_API_KEY;
     const formData = new FormData();
     formData.append('file', file);
 
-    console.log("Scanning file:", file.name);  // Debug log
+    console.log("Scanning file:", file.name);
 
     fetch(`https://www.virustotal.com/api/v3/files`, {
         method: 'POST',
@@ -93,7 +84,7 @@ function scanFile(file) {
     })
         .then(response => response.json())
         .then(data => {
-            console.log("VirusTotal Response:", data);  // Log the entire response for debugging
+            console.log("VirusTotal Response:", data);
             if (data && data.data && data.data.attributes && data.data.attributes.last_analysis_stats) {
                 const analysisStats = data.data.attributes.last_analysis_stats;
                 if (analysisStats.malicious > 0) {
