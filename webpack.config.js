@@ -1,5 +1,6 @@
 const path = require('path');
 const Dotenv = require('dotenv-webpack');
+const webpack = require('webpack');
 
 module.exports = {
     entry: './popup.js',
@@ -7,7 +8,7 @@ module.exports = {
         filename: 'popup.js',
         path: path.resolve(__dirname, 'dist')
     },
-    mode: 'production',
+    mode: 'production', // or 'development' based on your environment
     module: {
         rules: [
             {
@@ -23,6 +24,10 @@ module.exports = {
         ]
     },
     plugins: [
-        new Dotenv()
+        new Dotenv(),
+        new webpack.DefinePlugin({
+            'process.env.GOOGLE_API_KEY': JSON.stringify(process.env.GOOGLE_API_KEY),
+            'process.env.VIRUSTOTAL_API_KEY': JSON.stringify(process.env.VIRUSTOTAL_API_KEY)
+        })
     ]
 };
