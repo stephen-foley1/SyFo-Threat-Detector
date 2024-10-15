@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Your Extension Name",
+  "name": "SyFo Threat Detector",
   "version": "1.0",
   "description": "Your extension description.",
   "browser_action": {
