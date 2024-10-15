@@ -7,6 +7,7 @@ module.exports = {
         filename: 'popup.js',
         path: path.resolve(__dirname, 'dist')
     },
+    mode: 'production',
     module: {
         rules: [
             {
