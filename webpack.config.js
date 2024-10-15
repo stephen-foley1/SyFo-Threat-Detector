@@ -1,6 +1,5 @@
 const path = require('path');
 const Dotenv = require('dotenv-webpack');
-const webpack = require('webpack');
 
 module.exports = {
     entry: './popup.js',
@@ -24,10 +23,6 @@ module.exports = {
         ]
     },
     plugins: [
-        new Dotenv(),
-        new webpack.DefinePlugin({
-            'process.env.GOOGLE_API_KEY': JSON.stringify(process.env.GOOGLE_API_KEY),
-            'process.env.VIRUSTOTAL_API_KEY': JSON.stringify(process.env.VIRUSTOTAL_API_KEY)
-        })
+        new Dotenv()  // This will automatically replace process.env variables
     ]
 };
