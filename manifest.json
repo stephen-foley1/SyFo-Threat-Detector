@@ -1,5 +1,5 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 2,
   "name": "SyFo Threat Detector",
   "version": "1.0",
   "description": "Your extension description.",
