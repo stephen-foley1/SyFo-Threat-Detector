@@ -15,5 +15,5 @@
     "http://*/*",
     "https://*/*"
   ],
-  "content_security_policy": "script-src 'self' http://ec2-16-171-21-198.eu-north-1.compute.amazonaws.com; object-src 'self'"
+  "content_security_policy": "script-src 'self'; object-src 'self'"
 }
