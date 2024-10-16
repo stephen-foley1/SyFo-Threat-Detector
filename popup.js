@@ -69,34 +69,20 @@ function checkURL(url) {
 }
 
 function scanFile(file) {
-    const apiKey = process.env.VIRUSTOTAL_API_KEY;
     const formData = new FormData();
     formData.append('file', file);
 
-    console.log("Scanning file:", file.name);
-
-    fetch(`https://www.virustotal.com/api/v3/files`, {
+    // Update the URL to point to your proxy server
+    fetch(`http://ec2-16-171-21-198.eu-north-1.compute.amazonaws.com:3000/scan`, {
         method: 'POST',
-        headers: {
-            'x-apikey': apiKey
-        },
         body: formData
     })
         .then(response => response.json())
         .then(data => {
-            console.log("VirusTotal Response:", data);
-            if (data && data.data && data.data.attributes && data.data.attributes.last_analysis_stats) {
-                const analysisStats = data.data.attributes.last_analysis_stats;
-                if (analysisStats.malicious > 0) {
-                    alert("This file contains malware.");
-                } else {
-                    alert("This file seems safe.");
-                }
-            } else {
-                alert("No analysis results available yet. Try again later.");
-            }
+            // Handle the response from your proxy server
+            console.log(data);
         })
         .catch(error => {
-            console.error("Error with VirusTotal API:", error);
+            console.error("Error with proxy server:", error);
         });
 }
