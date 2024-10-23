@@ -20,17 +20,26 @@ document.addEventListener('DOMContentLoaded', function() {
             const formData = new FormData();
             formData.append('file', file);
 
-            fetch('http://167.99.200.62:3000/', {
+            fetch('http://167.99.200.62:3000/scan', {  // Updated URL
                 method: 'POST',
                 body: formData,
                 headers: {
                     'Accept': 'application/json'
                 }
             })
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
                 .then(data => {
                     console.log('Response from server:', data);
-                    alert('Scan result received. Check console for details.');
+                    if (data.error) {
+                        alert('Error scanning the file: ' + data.error.message);
+                    } else {
+                        alert('File scanned successfully. Check console for details.');
+                    }
                 })
                 .catch(error => {
                     console.error('Error communicating with the server:', error);
@@ -53,14 +62,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 const formData = new FormData();
                 formData.append('file', file);
 
-                fetch('http://167.99.200.62:3000/', {
+                fetch('http://167.99.200.62:3000/scan', {  // Updated URL
                     method: 'POST',
                     body: formData,
                     headers: {
                         'Accept': 'application/json'
                     }
                 })
-                    .then(response => response.json())
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
                     .then(data => {
                         console.log('Response from server via scanBtn:', data);
                         alert('Scan result received. Check console for details.');
