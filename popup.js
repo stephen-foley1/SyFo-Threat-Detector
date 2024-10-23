@@ -88,21 +88,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Function to display scan results
-function displayScanResult(data) {
-    const resultContainer = document.getElementById('resultContainer'); // Ensure you have this element in your extension's UI
-    if (data.isMalicious) {
-        resultContainer.textContent = 'The file is malicious!';
-        resultContainer.style.color = 'red'; // Change color to red for malicious files
-    } else {
-        resultContainer.textContent = 'The file is safe!';
-        resultContainer.style.color = 'green'; // Change color to green for safe files
-    }
-
-    // Optionally, you can display detailed scan results in the console
-    console.log("Scan Results:", data.scanResults);
-}
-
 // Function to check URLs using Google Safe Browsing API
 function checkURL(url) {
     const apiKey = 'YOUR_GOOGLE_API_KEY'; // Replace with your Google API key
