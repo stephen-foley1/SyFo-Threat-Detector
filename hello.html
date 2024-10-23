@@ -1,26 +1,73 @@
-// Function to display scan results
-function displayScanResults(data) {
-const resultsContainer = document.getElementById('results');
-resultsContainer.innerHTML = ''; // Clear previous results
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SyFo Threat Detector</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h3 {
+      color: #333;
+    }
+    div {
+      margin-bottom: 15px;
+    }
+    #results {
+      margin-top: 20px;
+      border: 1px solid #ccc;
+      padding: 10px;
+      background-color: #f9f9f9;
+    }
+    h4 {
+      margin: 10px 0 5px;
+    }
+    h5 {
+      margin: 5px 0;
+    }
+    p {
+      margin: 5px 0;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+<h3>SyFo Threat Detector</h3>
 
-if (data.error) {
-resultsContainer.innerHTML = `<p>Error: ${data.error.message}</p>`;
-return;
-}
+<!-- URL Input for Scanning -->
+<div>
+  <label for="urlInput">Enter URL to scan:</label>
+  <input type="text" id="urlInput" placeholder="https://example.com" />
+  <button id="scanUrlBtn">Scan URL</button>
+</div>
 
-// Display scan report
-const { data: scanData } = data;
-const fileReport = `
-<h4>Scan Report for File</h4>
-<p>File Name: ${scanData.attributes.name}</p>
-<p>File Size: ${scanData.attributes.size} bytes</p>
-<p>Scan Date: ${new Date(scanData.attributes.last_analysis_date * 1000).toLocaleString()}</p>
-<h5>Analysis Results:</h5>
-<ul>
-  ${Object.entries(scanData.attributes.last_analysis_results).map(([vendor, result]) => `
-  <li>${vendor}: ${result.category} (${result.result || 'No result'})</li>
-  `).join('')}
-</ul>
-`;
-resultsContainer.innerHTML = fileReport;  // Insert results into the container
-}
+<br />
+
+<!-- File Input for Scanning -->
+<div>
+  <label for="fileInput">Upload a file to scan:</label>
+  <input type="file" id="fileInput" />
+  <button id="scanFileBtn">Scan File</button>
+</div>
+
+<br />
+
+<!-- Additional button for another file scanning -->
+<div>
+  <label for="attachment">Upload a file for scanning with scanBtn:</label>
+  <input type="file" id="attachment" />
+  <button id="scanBtn">Scan File via scanBtn</button>
+</div>
+
+<!-- Results Container -->
+<div id="results"></div>
+
+<!-- Include the JavaScript file at the end of the body to ensure the DOM loads first -->
+<script src="dist/popup.js"></script>
+</body>
+</html>
