@@ -101,8 +101,8 @@ function displayScanResults(data) {
         });
     } else {
         console.error('Element with id "scanBtn" not found.');
-    }
-});
+
+};
 
 // Function to check URLs using Google Safe Browsing API
 function checkURL(url) {
