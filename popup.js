@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const formData = new FormData();
             formData.append('file', file);
 
-            fetch('http://ec2-16-171-21-198.eu-north-1.compute.amazonaws.com:3000/scan', {
+            fetch('http://167.99.200.62:3000/', {
                 method: 'POST',
                 body: formData,
                 headers: {
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const formData = new FormData();
                 formData.append('file', file);
 
-                fetch('http://ec2-16-171-21-198.eu-north-1.compute.amazonaws.com:3000/scan', {
+                fetch('http://167.99.200.62:3000/', {
                     method: 'POST',
                     body: formData,
                     headers: {
