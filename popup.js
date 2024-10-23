@@ -1,15 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Event listener for scanning a manually entered URL
-    document.getElementById('scanUrlBtn').addEventListener('click', function() {
-        console.log('Scan URL button clicked');
-        const url = document.getElementById('urlInput').value;
-        if (url) {
-            checkURL(url);
-        } else {
-            alert("Please enter a valid URL.");
-        }
-    });
-
     // Event listener for scanning a manually uploaded file
     document.getElementById('scanFileBtn').addEventListener('click', function() {
         console.log('Scan File button clicked');
@@ -35,11 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 })
                 .then(data => {
                     console.log('Response from server:', data);
-                    if (data.error) {
-                        alert('Error scanning the file: ' + data.error.message);
-                    } else {
-                        alert('File scanned successfully. Check console for details.');
-                    }
+                    displayScanResults(data);  // Call function to display results
                 })
                 .catch(error => {
                     console.error('Error communicating with the server:', error);
@@ -49,7 +34,34 @@ document.addEventListener('DOMContentLoaded', function() {
             alert("Please select a file to scan.");
         }
     });
+});
 
+// Function to display scan results
+function displayScanResults(data) {
+    const resultsContainer = document.getElementById('results');
+    resultsContainer.innerHTML = ''; // Clear previous results
+
+    if (data.error) {
+        resultsContainer.innerHTML = `<p>Error: ${data.error.message}</p>`;
+        return;
+    }
+
+    // Display scan report
+    const { data: scanData } = data;
+    const fileReport = `
+        <h4>Scan Report for File</h4>
+        <p>File Name: ${scanData.attributes.name}</p>
+        <p>File Size: ${scanData.attributes.size} bytes</p>
+        <p>Scan Date: ${new Date(scanData.attributes.last_analysis_date * 1000).toLocaleString()}</p>
+        <h5>Analysis Results:</h5>
+        <ul>
+            ${Object.entries(scanData.attributes.last_analysis_results).map(([vendor, result]) => `
+                <li>${vendor}: ${result.category} (${result.result || 'No result'})</li>
+            `).join('')}
+        </ul>
+    `;
+    resultsContainer.innerHTML = fileReport;  // Insert results into the container
+}
     // Event listener for scanning an additional uploaded file
     const scanBtn = document.getElementById('scanBtn');
     if (scanBtn) {
