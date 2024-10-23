@@ -88,19 +88,37 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Function to display scan results
-function displayScanResult(data) {
-    const resultContainer = document.getElementById('resultContainer'); // Ensure you have this element in your extension's UI
-    if (data.isMalicious) {
-        resultContainer.textContent = 'The file is malicious!';
-        resultContainer.style.color = 'red'; // Change color to red for malicious files
-    } else {
-        resultContainer.textContent = 'The file is safe!';
-        resultContainer.style.color = 'green'; // Change color to green for safe files
+// Example function to display the scan results
+function displayScanResults(data) {
+    const resultsContainer = document.getElementById('results');
+    resultsContainer.innerHTML = ''; // Clear previous results
+
+    if (data.error) {
+        resultsContainer.innerHTML = `Error: ${data.error.message}`;
+        return;
     }
 
-    // Optionally, you can display detailed scan results in the console
-    console.log("Scan Results:", data.scanResults);
+    const { data: scanData } = data;
+    const stats = scanData.attributes.stats;
+    const malwareCount = stats.malicious + stats.suspicious;
+
+    const message = `The scan found ${malwareCount} type${malwareCount !== 1 ? 's' : ''} of malware.`;
+
+    // Create the scan report
+    const fileReport = `
+    <h3>Scan Report for File</h3>
+    <p>${message}</p>
+    <p>File Name: ${scanData.attributes.name}</p>
+    <p>File Size: ${scanData.attributes.size} bytes</p>
+    <p>Scan Date: ${new Date(scanData.attributes.last_analysis_date * 1000).toLocaleString()}</p>
+    <h4>Analysis Results:</h4>
+    ${Object.entries(scanData.attributes.last_analysis_results).map(([vendor, result]) => `
+        <p>${vendor}: ${result.category} (${result.result || 'No result'})</p>
+    `).join('')}
+    `;
+
+    resultsContainer.innerHTML = fileReport; // Insert results into the container
+} console.log("Scan Results:", data.scanResults);
 }
 
 // Function to check URLs using Google Safe Browsing API
