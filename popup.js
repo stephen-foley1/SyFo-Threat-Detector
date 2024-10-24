@@ -1,26 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Event listener for scanning a manually entered URL
-    document.getElementById('scanUrlBtn').addEventListener('click', function() {
-        console.log('Scan URL button clicked');
-        const url = document.getElementById('urlInput').value;
-        if (url) {
-            checkURL(url);
-        } else {
-            alert("Please enter a valid URL.");
-        }
-    });
-
     // Event listener for scanning a manually uploaded file
     document.getElementById('scanFileBtn').addEventListener('click', function() {
-        console.log('Scan File button clicked');
         const fileInput = document.getElementById('fileInput');
         const file = fileInput.files[0];
         if (file) {
-            console.log('File selected for upload:', file.name);
             const formData = new FormData();
             formData.append('file', file);
 
-            fetch('http://167.99.200.62:3000/scan', {  // Updated URL
+            fetch('http://167.99.200.62:3000/scan', {
                 method: 'POST',
                 body: formData,
                 headers: {
@@ -35,7 +22,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 })
                 .then(data => {
                     console.log('Response from server:', data);
-                    displayScanResult(data); // Call the function to display results
+                    if (data.result) {
+                        alert(data.result); // Display if the file is malicious or safe
+                    } else {
+                        alert('No result found. Please try again later.');
+                    }
                 })
                 .catch(error => {
                     console.error('Error communicating with the server:', error);
@@ -45,47 +36,6 @@ document.addEventListener('DOMContentLoaded', function() {
             alert("Please select a file to scan.");
         }
     });
-
-    // Event listener for scanning an additional uploaded file
-    const scanBtn = document.getElementById('scanBtn');
-    if (scanBtn) {
-        scanBtn.addEventListener('click', function() {
-            console.log('Scan via scanBtn clicked');
-            const fileInput = document.getElementById('attachment');
-            const file = fileInput.files[0];
-            if (file) {
-                console.log('File selected for scan via scanBtn:', file.name);
-                const formData = new FormData();
-                formData.append('file', file);
-
-                fetch('http://167.99.200.62:3000/scan', {  // Updated URL
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! status: ${response.status}`);
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        console.log('Response from server via scanBtn:', data);
-                        displayScanResult(data); // Call the function to display results
-                    })
-                    .catch(error => {
-                        console.error('Error communicating with the server via scanBtn:', error);
-                        alert('Error: Unable to communicate with the server.');
-                    });
-            } else {
-                alert("Please select a file to scan.");
-            }
-        });
-    } else {
-        console.error('Element with id "scanBtn" not found.');
-    }
 });
 
 // Function to check URLs using Google Safe Browsing API
