@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Event listener for scanning a manually uploaded file
     document.getElementById('scanFileBtn').addEventListener('click', function() {
         const fileInput = document.getElementById('fileInput');
         const file = fileInput.files[0];
@@ -22,10 +21,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 })
                 .then(data => {
                     console.log('Response from server:', data);
-                    if (data.result) {
-                        alert(data.result); // Display if the file is malicious or safe
+                    if (data.malicious) {
+                        alert(`Malicious: ${data.message}`);
                     } else {
-                        alert('No result found. Please try again later.');
+                        alert('The file is safe.');
                     }
                 })
                 .catch(error => {
@@ -37,39 +36,3 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
-
-// Function to check URLs using Google Safe Browsing API
-function checkURL(url) {
-    const apiKey = process.env.GOOGLE_API_KEY; // Use environment variable
-    const apiURL = `https://safebrowsing.googleapis.com/v4/threatMatches:find?key=${apiKey}`;
-    const body = {
-        client: { clientId: "syfo", clientVersion: "1.0" },
-        threatInfo: {
-            threatTypes: ["MALWARE", "SOCIAL_ENGINEERING"],
-            platformTypes: ["ANY_PLATFORM"],
-            threatEntryTypes: ["URL"],
-            threatEntries: [{ url }]
-        }
-    };
-
-    fetch(apiURL, {
-        method: 'POST',
-        body: JSON.stringify(body),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log('API Response:', data);
-            if (data.matches) {
-                alert("Warning! This link may be a phishing site.");
-            } else {
-                alert("This URL seems safe.");
-            }
-        })
-        .catch(error => {
-            console.error('Error with Google Safe Browsing API:', error);
-            alert('Error: Unable to check URL.');
-        });
-}
