@@ -7,7 +7,6 @@ module.exports = {
         filename: 'popup.js',
         path: path.resolve(__dirname, 'dist')
     },
-    mode: 'production', // or 'development'
     module: {
         rules: [
             {
@@ -23,6 +22,6 @@ module.exports = {
         ]
     },
     plugins: [
-        new Dotenv()  // Automatically replace .env variables
+        new Dotenv()
     ]
 };

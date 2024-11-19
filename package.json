@@ -11,6 +11,6 @@
     "dotenv-webpack": "^7.0.2"
   },
   "scripts": {
-    "build": "webpack"
+    "build": "node build.js"
   }
 }

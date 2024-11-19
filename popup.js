@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Function to check URLs using Google Safe Browsing API
 function checkURL(url) {
-    const apiKey = 'YOUR_GOOGLE_API_KEY'; // Replace with your Google API key
+    const apiKey = process.env.GOOGLE_API_KEY; // Use environment variable
     const apiURL = `https://safebrowsing.googleapis.com/v4/threatMatches:find?key=${apiKey}`;
     const body = {
         client: { clientId: "syfo", clientVersion: "1.0" },
