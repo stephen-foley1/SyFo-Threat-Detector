@@ -34,5 +34,6 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             alert("Please select a file to scan.");
         }
+
     });
 });
