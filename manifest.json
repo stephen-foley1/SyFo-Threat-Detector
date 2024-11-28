@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "SyFo Threat Detector",
-  "version": "1.10",
+  "version": "1.15",
   "description": "Your extension description.",
   "browser_action": {
     "default_popup": "hello.html"

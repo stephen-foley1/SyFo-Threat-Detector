@@ -3,71 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="styles/styles.css">
   <title>SyFo Threat Detector</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-    }
-    h3 {
-      color: #333;
-    }
-    div {
-      margin-bottom: 15px;
-    }
-    #results {
-      margin-top: 20px;
-      border: 1px solid #ccc;
-      padding: 10px;
-      background-color: #f9f9f9;
-    }
-    h4 {
-      margin: 10px 0 5px;
-    }
-    h5 {
-      margin: 5px 0;
-    }
-    p {
-      margin: 5px 0;
-    }
-    ul {
-      list-style-type: none;
-      padding: 0;
-    }
-  </style>
 </head>
 <body>
-<h3>SyFo Threat Detector</h3>
-
-<!-- URL Input for Scanning -->
 <div>
-  <label for="urlInput">Enter URL to scan:</label>
-  <input type="text" id="urlInput" placeholder="https://example.com" />
-  <button id="scanUrlBtn">Scan URL</button>
+  <img src="styles/banner.png" alt="SyFo Threat Detector" id="banner" />
 </div>
 
-<br />
+<!-- Container for the two columns -->
+<div class="scanner-container">
+  <!-- Phishing Link Scanner Section -->
+  <div class="scanner">
+    <img src="styles/link.png" id="fliconsli"/>
+    <h3>Phishing Link Scanner</h3>
+    <div>
+      <label for="urlInput">Enter URL to scan:</label>
+      <input type="text" id="urlInput" placeholder="https://example.com" />
+      <button id="scanUrlBtn">Scan URL</button>
+    </div>
+  </div>
 
-<!-- File Input for Scanning -->
-<div>
-  <label for="fileInput">Upload a file to scan:</label>
-  <input type="file" id="fileInput" />
-  <button id="scanFileBtn">Scan File</button>
+  <!-- Malicious Attachment Scanner Section -->
+  <div class="scanner">
+    <img src="styles/attachment.png" id="fliconsat"/>
+    <h3>Malicious Attachment Scanner</h3>
+    <div>
+      <label for="fileInput">Upload a file to scan:</label>
+      <div class="file-upload">
+        <!-- Hidden file input (This is where the user will select a file) -->
+        <input type="file" id="fileInput" style="display: none;" />
+        <!-- Click to Upload button (Visible) -->
+        <button type="button" id="fileUploadBtn" class="secondary">Click to upload</button>
+      </div>
+      <button id="scanFileBtn" class="primary">Scan File</button>
+      <p id="uploadMessage"></p> <!-- Message element to display upload status -->
+    </div>
+  </div>
 </div>
 
-<br />
-
-<!-- Additional button for another file scanning -->
-<div>
-  <label for="attachment">Upload a file for scanning with scanBtn:</label>
-  <input type="file" id="attachment" />
-  <button id="scanBtn">Scan File via scanBtn</button>
-</div>
-
-<!-- Results Container -->
-<div id="results"></div>
-
-<!-- Include the JavaScript file at the end of the body to ensure the DOM loads first -->
 <script src="dist/popup.js"></script>
 </body>
 </html>
